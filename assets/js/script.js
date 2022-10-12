@@ -6,7 +6,7 @@ function handleButtonEvent(event) {
     forecastEl.innerHTML = "";
     city = searchInputTextEl.value;
 
-    var queryGeoLocation = "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    var queryGeoLocation = "https://api.openweathermap.org/geo/1.0/direct?q=" +
                            city + "&limit=1&appid=" + apiKey;
     
     fetch(queryGeoLocation)

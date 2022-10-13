@@ -5,6 +5,7 @@ function handleButtonEvent(event) {
     event.preventDefault();
     forecastEl.innerHTML = "";
     city = searchInputTextEl.value;
+    addCityToLocalStorage(city);
 
     var queryGeoLocation = "https://api.openweathermap.org/geo/1.0/direct?q=" +
                            city + "&limit=1&appid=" + apiKey;
@@ -33,12 +34,12 @@ function handleButtonEvent(event) {
 
                 var tempDay = new Date(weatherDate);
                 weatherDate.setDate(tempDay.getDate() + 1);
-                }
-                
-                              
+                }         
             }
         });
       });
+
+      displayPreviousCities();
 }
 
 function addWeather(date, temp, humidity, icon, windspeed) {
@@ -70,9 +71,36 @@ function addWeather(date, temp, humidity, icon, windspeed) {
     forecastEl.appendChild(weatherDiv);
 }
 
+function addCityToLocalStorage(city) {
+    var cityArray = [city];
+    var localStorageArray = JSON.parse(localStorage.getItem("cityList"));
+    if (localStorageArray) {
+        cityArray = cityArray.concat(localStorageArray);
+    }
+    localStorage.setItem("cityList", JSON.stringify(cityArray));
+}
+
+function displayPreviousCities() {
+    var localStorageArray = JSON.parse(localStorage.getItem("cityList"));
+
+    if (localStorageArray) {
+        previousCitiesEl.innerHTML = "";
+        for (i=0; i<localStorageArray.length; i++) {
+            let cityP = document.createElement("p");
+            cityP.textContent = localStorageArray[i];
+            previousCitiesEl.appendChild(cityP);
+        }
+    }
+    
+}
+
 var searchInputTextEl = document.getElementById("search-input");
 
 var buttonEl = document.getElementById("search-button");
 buttonEl.addEventListener('click', handleButtonEvent);
 
 var forecastEl = document.getElementById("forecast");
+
+var previousCitiesEl = document.getElementById("previousCities");
+
+displayPreviousCities();

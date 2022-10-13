@@ -1,3 +1,11 @@
-
+.card {
+    background-color: darkblue;
+    color: white;
+    border: solid white 2px;
+    width: 15%;
+}
  
-    
+.inputform {
+    padding: 5px;
+    margin: 5px;
+}

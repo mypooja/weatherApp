@@ -1,11 +1,32 @@
+/*Styling for header*/
+.jumbotron {
+    background-color: lightblue;
+}
+
+/*Styling for weather card*/
 .card {
-    background-color: darkblue;
+    background-color: rgb(37, 37, 175);
     color: white;
     border: solid white 2px;
     width: 15%;
 }
- 
-.inputform {
+
+/*Styling for saved cities*/
+.city {
+    background-color: grey;
+    color: white;
+    padding: 5px;
+    border: solid black 2px;
+}
+
+/*Styling for input box and search button*/
+#search-input, #search-button {
     padding: 5px;
     margin: 5px;
+    border: solid black 2px;
+}
+
+/*Styling for saved cities parent div*/
+#previousCities {
+    margin-top: 15px;
 }

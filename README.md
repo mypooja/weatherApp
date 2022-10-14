@@ -12,7 +12,7 @@ N/A
 This project has an input box where user can provide the name of the city and click on submit button to view weather forecast of the city. All searches are also saved in the local storage and displayed below the input box. User can select a city by clicking on one of the previously saved searches.
 
 Screenshots of different views of the website -
-![ScreenShot of the page after entering city](assets/images/weatherApp-screenshot-2.png)
+![ScreenShot of the page after entering city](assets/images/wather-app-screenshot.png)
 
 Link of deployed application - https://mypooja.github.io/weatherApp/
 

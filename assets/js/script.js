@@ -1,11 +1,18 @@
 let apiKey = "1fdbaa9554b6e29131fb70def2d34397";
 let lon, lat, city;
 
+/*Handles Search button click*/
 function handleButtonEvent(event) {
     event.preventDefault();
-    forecastEl.innerHTML = "";
     city = searchInputTextEl.value;
     addCityToLocalStorage(city);
+    displayCityWeather(city);
+    displayPreviousCities();
+}
+
+/*Displays 5 day forecast of the input city*/
+function displayCityWeather(city) {
+    forecastEl.innerHTML = "";
 
     var queryGeoLocation = "https://api.openweathermap.org/geo/1.0/direct?q=" +
                            city + "&limit=1&appid=" + apiKey;
@@ -38,10 +45,9 @@ function handleButtonEvent(event) {
             }
         });
       });
-
-      displayPreviousCities();
 }
 
+/*Adds weather elements (icon, temp, wind, humidity) in the div for a day*/
 function addWeather(date, temp, humidity, icon, windspeed) {
     let weatherDiv = document.createElement("div");
     weatherDiv.className = "card";
@@ -71,15 +77,21 @@ function addWeather(date, temp, humidity, icon, windspeed) {
     forecastEl.appendChild(weatherDiv);
 }
 
+/*Adds city name to the local storage if not already present in the local storage*/
 function addCityToLocalStorage(city) {
     var cityArray = [city];
     var localStorageArray = JSON.parse(localStorage.getItem("cityList"));
     if (localStorageArray) {
+        var isCityAlreadyPresentInLocalStorage = localStorageArray.includes(city);
+        if (isCityAlreadyPresentInLocalStorage) {
+            return;
+        }
         cityArray = cityArray.concat(localStorageArray);
     }
     localStorage.setItem("cityList", JSON.stringify(cityArray));
 }
 
+/*Displays previously saved cities from the local storage*/
 function displayPreviousCities() {
     var localStorageArray = JSON.parse(localStorage.getItem("cityList"));
 
@@ -87,11 +99,17 @@ function displayPreviousCities() {
         previousCitiesEl.innerHTML = "";
         for (i=0; i<localStorageArray.length; i++) {
             let cityP = document.createElement("p");
+            cityP.className = "city";
             cityP.textContent = localStorageArray[i];
             previousCitiesEl.appendChild(cityP);
         }
     }
     
+}
+
+/*Handles click event on a previously saved city*/
+function handleClickOnPreviousCity(event) {
+    displayCityWeather(event.target.textContent);
 }
 
 var searchInputTextEl = document.getElementById("search-input");
@@ -102,5 +120,7 @@ buttonEl.addEventListener('click', handleButtonEvent);
 var forecastEl = document.getElementById("forecast");
 
 var previousCitiesEl = document.getElementById("previousCities");
+
+previousCitiesEl.addEventListener('click', handleClickOnPreviousCity);
 
 displayPreviousCities();
